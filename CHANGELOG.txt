@@ -1,0 +1,2 @@
+veritabill 0.1.0 - June 6, 2012
+    * Initial release
