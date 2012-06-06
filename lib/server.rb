@@ -1,5 +1,5 @@
 require 'sinatra'
-require 'activerecord'
+require 'active_record'
 require 'uri'
 
 db = URI.parse(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
