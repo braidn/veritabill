@@ -18,13 +18,34 @@ disable :logging
 set :root, File.dirname(__FILE__) + "/../"
 
 get "/" do
-  File.readlines("public/index.html")
+  # render the app page
+  # show a table of past estimates and completions
+  # show the most recent estimates, with Veritable estimates and a "complete" button
+  # show the form to enter a new estimate
+  erb :index, :locals => {:estimates => estimates}
 end
 
 post "/estimate" do
-
+  register_estimate
+  erb :index, :locals => {:estimates => estimates}
+  # post a new estimate to the database
+  # make a prediction
+  # show the prediction
 end
 
-post "/finish" do
-  
+post "/complete" do
+  register_completion
+  erb :index, :locals => {:estimates => estimates}
+  # post a completion to the database
+  # update the Veritable table
+  # rerun analysis
+end
+
+def estimates
+end
+
+def register_estimate
+end
+
+def register_completion
 end
