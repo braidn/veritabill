@@ -1,7 +1,6 @@
 require 'veritable'
 require 'data_mapper'
-
-DATASOURCE = 'seed_data.csv'
+require 'seed'
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 
@@ -26,7 +25,7 @@ schema = Veritable::Schema.new({
   'true_time' => {'type' => 'count'},
   'estimate' => {'type' => 'count'}
 })
-records = Veritable::Util.read_csv(DATASOURCE)
+records = seed_data
 clean_data(records, schema)
 
 api = Veritable.connect
