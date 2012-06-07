@@ -43,5 +43,5 @@ records.each {|r|
   t.upload_row(r)
 }
 
-t.create_analysis(schema, 'veritabill_1')
-t.wait
+a = t.create_analysis(schema, 'veritabill_1')
+a.wait
