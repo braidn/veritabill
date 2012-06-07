@@ -9,7 +9,7 @@
     <div class="container">
       <div class="row">
         <div class="span4">
-          <h1 style="font-family: Bitter">Veritabill</h1>
+          <h1>Veritabill</h1>
           <table class="table table-striped">
             <thead>
               <tr>
@@ -24,16 +24,15 @@
             </thead>
             <tbody>
               <% (0..10).each do |i| %>
-                <% estimates[i] do |e| %>
-                  <tr>
-                    <td><%= i %></td>
-                    <td><%= e['user'] %></td>
-                    <td><%= e['client'] %></td>
-                    <td><%= e['day'] %></td>
-                    <td><%= e['time_of_day'] %></td>
-                    <td><%= e['estimate'] %></td>
-                  </tr>
-                <% end %>
+                <% e = estimates[i] %>
+                <tr>
+                  <td><%= i %></td>
+                  <td><%= e['user'] %></td>
+                  <td><%= e['client'] %></td>
+                  <td><%= e['day'] %></td>
+                  <td><%= e['time_of_day'] %></td>
+                  <td><%= e['estimate'] %></td>
+                </tr>
               <% end %>
             </tbody>
           </table>
