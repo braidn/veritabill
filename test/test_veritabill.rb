@@ -11,5 +11,8 @@ class TestVeritabill < Test::Unit::TestCase
     Sinatra::Application
   end
 
-  def test_
+  def test_app_root
+    get '/'
+    assert last_response.ok?
+  end
 end
