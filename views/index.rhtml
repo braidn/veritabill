@@ -14,7 +14,7 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th>#</th>
+                <th>Task #</th>
                 <th>User</th>
                 <th>Client</th>
                 <th>Day</th>
@@ -24,10 +24,10 @@
               </tr>
             </thead>
             <tbody>
-              <% (0..10).each do |i| %>
-                <% e = estimates[i] %>
+              <% (1..10).each do |i| %>
+                <% e = estimates[-i] %>
                 <tr>
-                  <td><%= i %></td>
+                  <td><%= estimates.size - i + 1 %></td>
                   <td><%= e['user'] %></td>
                   <td><%= e['client'] %></td>
                   <td><%= e['day'] %></td>
