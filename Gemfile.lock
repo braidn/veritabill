@@ -54,17 +54,29 @@ GEM
     fastercsv (1.5.5)
     json (1.6.7)
     json_pure (1.6.7)
+    macaddr (1.6.0)
+      systemu (~> 2.2.0)
+    mime-types (1.18)
     multi_json (1.0.4)
     rack (1.4.1)
     rack-protection (1.2.0)
       rack
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     sinatra (1.3.2)
       rack (~> 1.3, >= 1.3.6)
       rack-protection (~> 1.2)
       tilt (~> 1.3, >= 1.3.3)
     stringex (1.3.3)
+    systemu (2.2.0)
     tilt (1.3.3)
+    uuid (2.3.5)
+      macaddr (~> 1.0)
     uuidtools (2.1.2)
+    veritable (0.1.0.3984)
+      multi_json
+      rest-client (~> 1.4)
+      uuid
 
 PLATFORMS
   ruby
@@ -73,3 +85,4 @@ DEPENDENCIES
   data_mapper
   dm-postgres-adapter
   sinatra
+  veritable
