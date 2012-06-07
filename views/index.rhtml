@@ -11,12 +11,31 @@
         <div class="span4">
           <h1 style="font-family: Bitter">Veritabill</h1>
           <table class="table table-striped">
-            <thead></thead>
-            <% (0..10).each do |i| %>
-              <% estimates.pop do |e| %>
-                <%= e %>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>User</th>
+                <th>Client</th>
+                <th>Day</th>
+                <th>Time of Day</th>
+                <th>Estimate</th>
+                <th>Actual</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% (0..10).each do |i| %>
+                <% estimates[i] do |e| %>
+                  <tr>
+                    <td><%= i %></td>
+                    <td><%= e['user'] %></td>
+                    <td><%= e['client'] %></td>
+                    <td><%= e['day'] %></td>
+                    <td><%= e['time_of_day'] %></td>
+                    <td><%= e['estimate'] %></td>
+                  </tr>
+                <% end %>
               <% end %>
-            <% end %>
+            </tbody>
           </table>
         </div>
       </div>
