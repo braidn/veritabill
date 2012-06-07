@@ -26,7 +26,7 @@ schema = Veritable::Schema.new({
   'estimate' => {'type' => 'count'}
 })
 records = SEED_DATA
-Veritable.Util::clean_data(records, schema)
+Veritable::Util.clean_data(records, schema)
 
 api = Veritable.connect
 t = Veritable.create_table('veritabill', {'force' => true})
