@@ -7,7 +7,7 @@ DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 class Task
   include DataMapper::Resource
   property :id, Serial
-  property :name, String
+  property :user, String
   property :day, String
   property :time_of_day, String
   property :client, String
