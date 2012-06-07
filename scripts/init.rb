@@ -33,14 +33,14 @@ api = Veritable.connect
 t = Veritable.create_table('veritabill', {'force' => true})
 
 records.each {|r|
-  Task.create(
-    :user => r['user']
-    :day => r['day']
-    :time_of_day => r['time_of_day']
-    :client => r['client']
-    :true_time => r['true_time']
+  Task.create({
+    :user => r['user'],
+    :day => r['day'],
+    :time_of_day => r['time_of_day'],
+    :client => r['client'],
+    :true_time => r['true_time'],
     :estimate => r['estimate']
-  )
+  })
   t.upload_row(r)
 }
 
