@@ -3,15 +3,17 @@
   <head>
     <title>Veritabill!</title>
     <link rel="stylesheet" href="css/vendor/bootstrap.css" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Bitter:400,700,400italic' rel='stylesheet' type='text/css'>
   </head>
   <body>
     <div class="container">
       <div class="row">
         <div class="span4">
+          <h1 style="font-family: Bitter">Veritabill</h1>
           <table class="table table-striped">
             <thead></thead>
             <% (0..10).each do |i| %>
-              estimates.next do |e| %>
+              <% estimates.next do |e| %>
                 <%= e %>
               <% end %>
             <% end %>
