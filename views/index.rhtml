@@ -10,8 +10,10 @@
         <div class="span4">
           <table class="table table-striped">
             <thead></thead>
-            <% estimates.each do |e| %>
+            <% (0..10).each do |i| %>
+              estimates.next do |e| %>
                 <%= e %>
+              <% end %>
             <% end %>
           </table>
         </div>
