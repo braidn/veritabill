@@ -13,7 +13,7 @@
           <table class="table table-striped">
             <thead></thead>
             <% (0..10).each do |i| %>
-              <% estimates.next do |e| %>
+              <% estimates.pop do |e| %>
                 <%= e %>
               <% end %>
             <% end %>
