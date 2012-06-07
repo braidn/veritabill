@@ -3,6 +3,7 @@
   <head>
     <title>Veritabill!</title>
     <link rel="stylesheet" href="css/vendor/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="css/application.css" type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Bitter:400,700,400italic' rel='stylesheet' type='text/css'>
   </head>
   <body>
@@ -32,7 +33,7 @@
                   <td><%= e['day'] %></td>
                   <td><%= e['time_of_day'] %></td>
                   <td><%= e['estimate'] %></td>
-                  <td><span style="color:<%= (e['true_time'] > e['estimate']) ? '#cc0000' : '#00cc00' %>"> <%= e['true_time'] %></span></td>
+                  <td><%= e['true_time'] %><span style="color:<%= (e['true_time'] > e['estimate']) ? '#cc0000' : '#00cc00' %>; font-size: -2">(<%= (e['true_time'] > e['estimate']) ? '+#{e['true_time']- e['estimate']}' : '-#{e['true_time']- e['estimate']}.abs' %>)</span></td>
                 </tr>
               <% end %>
             </tbody>
