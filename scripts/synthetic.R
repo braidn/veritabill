@@ -95,4 +95,4 @@ tasks <- cbind(tasks, estimate = sapply(1:(dim(tasks)[1]), function (i) {
   estimate
 }))
 
-write.csv(tasks, "seed_data.csv")
+write.csv(tasks, "seed_data.csv", row.names = FALSE)
