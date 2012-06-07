@@ -32,6 +32,7 @@
                   <td><%= e['day'] %></td>
                   <td><%= e['time_of_day'] %></td>
                   <td><%= e['estimate'] %></td>
+                  <td><span style="color:<%= (e['true_time'] > e['estimate']) ? '#cc0000' : '#00cc00' %>"> <%= e['true_time'] %></span></td>
                 </tr>
               <% end %>
             </tbody>
