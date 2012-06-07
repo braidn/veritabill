@@ -63,16 +63,16 @@ tasks <- data.frame(
   class = task.class,
   user = sample(names(users), n, replace = TRUE),
   day = sample(days, n, replace = TRUE),
-  time = sample(times, n, replace = TRUE),
+  time_of_day = sample(times, n, replace = TRUE),
   client = sample(clients, n, replace = TRUE),
-  true.time = sapply(task.class, function (t) {
+  true_time = sapply(task.class, function (t) {
     max(1, if (t == "short") round(rnorm(1, 8, 4)) else round(rnorm(1, 96, 16)))})
 )
 
 tasks <- cbind(tasks, estimate = sapply(1:(dim(tasks)[1]), function (i) {
   t <- tasks[i,"class"]
   u <- users[tasks[i,"user"]]
-  time <- tasks[i, "time"]
+  time <- tasks[i, "time_of_day"]
   misclassify <- misclassify * (if ('misclassify' %in% u) u['misclassify'] else 1)
   if (runif(1) < misclassify) {
     t <- (if (t == "short") "long" else "short")
