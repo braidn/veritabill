@@ -1,5 +1,6 @@
 require 'veritable'
 require 'data_mapper'
+require 'seed'
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 
