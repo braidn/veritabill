@@ -29,7 +29,7 @@ records = SEED_DATA
 Veritable::Util.clean_data(records, schema)
 
 api = Veritable.connect
-t = api.create_table('veritabill', {'force' => true})
+t = api.create_table('veritabill', '', {'force' => true})
 
 records.each {|r|
   Task.create({
