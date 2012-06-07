@@ -1,6 +1,5 @@
 require 'veritable'
 require 'data_mapper'
-require './seed.rb'
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 
@@ -25,7 +24,7 @@ schema = Veritable::Schema.new({
   'true_time' => {'type' => 'count'},
   'estimate' => {'type' => 'count'}
 })
-records = seed_data
+records = SEED_DATA
 clean_data(records, schema)
 
 api = Veritable.connect
