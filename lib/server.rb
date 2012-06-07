@@ -1,18 +1,21 @@
 require 'sinatra'
-require 'active_record'
+require 'data_mapper'
 require 'uri'
 
-db = URI.parse(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
+DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 
-ActiveRecord::Base.establish_connection(
-  :adapter  => db.scheme == 'postgres' ? 'postgresql' : db.scheme,
-  :host     => db.host,
-  :port     => db.port,
-  :username => db.user,
-  :password => db.password,
-  :database => db.path[1..-1],
-  :encoding => 'utf8'
-)
+class Task
+  include DataMapper::Resource
+  property :id, Serial
+  property :name, String
+  property :day, String
+  property :time_of_day, String
+  property :client, String
+  property :true_time, Integer
+  property :estimate, Integer
+end
+
+DataMapper.auto_upgrade!
 
 disable :logging
 set :root, File.dirname(__FILE__) + "/../"
@@ -42,6 +45,7 @@ post "/complete" do
 end
 
 def estimates
+  Task.all
 end
 
 def register_estimate
