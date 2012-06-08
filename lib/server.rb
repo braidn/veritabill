@@ -46,7 +46,7 @@ post "/complete" do
 end
 
 def estimates
-  Task.last(100)
+  Task.last(10)
 end
 
 def register_estimate
