@@ -25,6 +25,7 @@ get "/" do
   # show a table of past estimates and completions
   # show the most recent estimates, with Veritable estimates and a "complete" button
   # show the form to enter a new estimate
+
   erb :index, :locals => {:estimates => estimates}
 end
 
@@ -45,7 +46,7 @@ post "/complete" do
 end
 
 def estimates
-  Task.all
+  Task.last(10)
 end
 
 def register_estimate
