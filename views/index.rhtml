@@ -27,7 +27,7 @@
               <% (1..10).each do |i| %>
                 <% e = estimates[-i] %>
                 <tr>
-                  <td><%= estimates.size - i + 1 %></td>
+                  <td><%= e['id'] %></td>
                   <td><%= e['user'] %></td>
                   <td><%= e['client'] %></td>
                   <td><%= e['day'] %></td>
