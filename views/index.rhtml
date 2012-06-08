@@ -24,7 +24,7 @@
               </tr>
             </thead>
             <tbody>
-              <% (1..10).each do |i| %>
+              <% (1..10).to_a.reverse.each do |i| %>
                 <% e = estimates[-i] %>
                 <tr>
                   <td><%= estimates.size - i + 1 %></td>
