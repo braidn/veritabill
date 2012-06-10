@@ -27,7 +27,7 @@ set :root, File.dirname(__FILE__) + "/../"
 get "/" do
   ee = estimates
   ee.each {|e|
-    e['predicted'] = most_recent_analysis.predict
+    e['predicted'] = most_recent_analysis_succeeded.predict
   }
   # render the app page
   # show a table of past estimates and completions
@@ -51,11 +51,11 @@ post "/complete" do
   # post a completion to the database
   # update the Veritable table
   # rerun analysis
-  if last_analysis_created._id == last_analysis_succeeded._id
+  if most_recent_analysis_created._id == most_recent_analysis_succeeded._id
   else
-    n = last_analysis_created._id.split('_')[1].to_i + 1
-    last_analysis_created.delete
-    table.create_analysis(schema, 'veritabill_#{n}')
+    n = most_recent_analysis_created._id.split('_')[1].to_i + 1
+    most_recent_analysis_created.delete
+    table.most_recent_analysis_succeeded(schema, 'veritabill_#{n}')
   end
 end
 
@@ -72,10 +72,10 @@ end
 def connect_to_veritable
 end
 
-def last_analysis_created
+def most_recent_analysis_created
   table.analyses.to_a.max_by {|a| a.created_at}
 end
 
-def last_analysis_succeeded
+def most_recent_analysis_succeeded
   (table.analyses.to_a.select {|a| a.succeeded?}).max_by {|a| a.created_at}
 end
