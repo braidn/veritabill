@@ -29,6 +29,7 @@ records = SEED_DATA
 Veritable::Util.clean_data(records, schema)
 
 api = Veritable.connect
+api.tables.each {|t| t.delete}
 t = api.create_table('veritabill', '', {'force' => true})
 
 records.each {|r|
@@ -43,5 +44,10 @@ records.each {|r|
   t.upload_row(r)
 }
 
-a = t.create_analysis(schema, 'veritabill_1')
+a = t.create_analysis(schema, 'veritabill_0')
 a.wait
+
+Task.all.each {|r|
+  estimate = a.predict()
+  r.update()
+}
