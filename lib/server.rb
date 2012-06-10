@@ -18,8 +18,8 @@ end
 
 DataMapper.auto_upgrade!
 
-api = Veritable.connect
-table = api.table 'veritabill'
+API = Veritable.connect
+TABLE = API.table 'veritabill'
 
 disable :logging
 set :root, File.dirname(__FILE__) + "/../"
@@ -55,7 +55,7 @@ post "/complete" do
   else
     n = most_recent_analysis_created._id.split('_')[1].to_i + 1
     most_recent_analysis_created.delete
-    table.most_recent_analysis_succeeded(schema, 'veritabill_#{n}')
+    TABLE.most_recent_analysis_succeeded(schema, 'veritabill_#{n}')
   end
 end
 
@@ -73,9 +73,9 @@ def connect_to_veritable
 end
 
 def most_recent_analysis_created
-  table.analyses.to_a.max_by {|a| a.created_at}
+  TABLE.analyses.to_a.max_by {|a| a.created_at}
 end
 
 def most_recent_analysis_succeeded
-  (table.analyses.to_a.select {|a| a.succeeded?}).max_by {|a| a.created_at}
+  (TABLE.analyses.to_a.select {|a| a.succeeded?}).max_by {|a| a.created_at}
 end
