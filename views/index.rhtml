@@ -19,12 +19,13 @@
                 <th>Client</th>
                 <th>Day</th>
                 <th>Time of Day</th>
-                <th>Estimate</th>
+                <th>User Estimate</th>
+                <th>Veritable Estimate</th>
                 <th>Actual</th>
               </tr>
             </thead>
             <tbody>
-              <% estimates.to_a.reverse.each do |e| %>
+              <% estimates.reverse.each do |e| %>
                 <tr>
                   <td><%= e['id'] %></td>
                   <td><%= e['user'] %></td>
@@ -32,6 +33,7 @@
                   <td><%= e['day'] %></td>
                   <td><%= e['time_of_day'] %></td>
                   <td><%= e['estimate'] %></td>
+                  <td><%= e['predicted'] %></td>
                   <td><%= e['true_time'] %></td>
                   <td><span style="color:<%= (e['true_time'] > e['estimate']) ? '#cc0000' : '#00cc00' %>; font-size: 80%;">(<%= (e['true_time'] > e['estimate']) ? "+#{e['true_time'] - e['estimate']}" : "-#{(e['true_time'] - e['estimate']).abs}" %>)</span></td>
                 </tr>
