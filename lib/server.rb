@@ -60,7 +60,7 @@ post "/complete" do
 end
 
 def estimates(params = nil)
-  params.nil? Task.last(10) 
+  params.nil? ? Task.last(10) : Task.last(params['n'])
 end
 
 def register_estimate
