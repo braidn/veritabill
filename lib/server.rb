@@ -25,10 +25,10 @@ disable :logging
 set :root, File.dirname(__FILE__) + "/../"
 
 get "/" do
-  ee = estimates
-  ee.each {|e|
-    e['predicted'] = most_recent_analysis_succeeded.predict
-  }
+  # ee = estimates
+  # ee.each {|e|
+  #   e['predicted'] = most_recent_analysis_succeeded.predict
+  # }
   # render the app page
   # show a table of past estimates and completions
   # show the most recent estimates, with Veritable estimates and a "complete" button
