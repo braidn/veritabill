@@ -45,6 +45,32 @@
                     <option><%= u %></option>
                   <% end %>
                 </select></td>
+                <td><select id="client" class="span2">
+                  <% clients.each do |c| %>
+                    <option><%= c %></option>
+                  <% end %>
+                </select></td>
+                <td><select id="day" class="span2">
+                  <% days.each do |d| %>
+                    <option><%= d %></option>
+                  <% end %>
+                </select></td>
+                <td><select id="time" class="span2">
+                  <% times.each do |t| %>
+                    <option><%= t %></option>
+                  <% end %>
+                </select></td>
+                <td>
+                </td>
+                <td>
+                  <!-- veritable estimate -->
+                </td>
+                <td>
+                  <button class='submit' />
+                </td>
+                <td>
+                  <!-- performant? -->
+                </td>
               </tr>
             </tbody>
           </table>

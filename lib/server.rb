@@ -36,7 +36,11 @@ get "/" do
 
   erb :index, :locals => {
     :estimates => estimates,
-    :users => ['Yvette', 'Tom', 'Jim', 'Cindy', 'Evelyn']}
+    :users => ['Yvette', 'Tom', 'Jim', 'Cindy', 'Evelyn'],
+    :clients => ['Cyberdyne Systems', 'OCP Inc', 'Mooby\'s Family Restaurants', 'Weyland-Yutani'],
+    :days => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    :times => ['Morning', 'Lunchtime', 'Afternoon']
+  }
 end
 
 post "/estimate" do
