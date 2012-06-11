@@ -13,7 +13,8 @@ class Task
   property :time_of_day, String
   property :client, String
   property :true_time, Integer
-  property :estimate, Integer
+  property :user_estimate, Integer
+  property :veritable_estimate, Float
 end
 
 DataMapper.auto_upgrade!
@@ -30,7 +31,6 @@ get "/" do
   # show the most recent estimates, with Veritable estimates and a "complete" button
   # show the form to enter a new estimate
 
-  print estimates
   erb :index, :locals => {
     :estimates => estimates,
     :users => ['Yvette', 'Tom', 'Jim', 'Cindy', 'Evelyn'],
