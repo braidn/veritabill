@@ -1,3 +1,7 @@
+# Veritabill 1.0.0, June 11, 2012
+# Copyright (c) 2012 Prior Knowledge, Inc.
+# Questions? Contact Max Gasner <max@priorknowledge.com>.
+
 require 'sinatra'
 require 'data_mapper'
 require 'uri'
@@ -8,6 +12,7 @@ DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 class Task
   include DataMapper::Resource
   property :id, Serial
+  property :type, String
   property :user, String
   property :day, String
   property :time_of_day, String
@@ -33,6 +38,7 @@ get "/" do
 
   erb :index, :locals => {
     :estimates => estimates,
+    :types => ['Short, Long']
     :users => ['Yvette', 'Tom', 'Jim', 'Cindy', 'Evelyn'],
     :clients => ['Cyberdyne Systems', 'OCP Inc', 'Mooby\'s Family Restaurants', 'Weyland-Yutani'],
     :days => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
@@ -41,11 +47,13 @@ get "/" do
 end
 
 post "/estimate" do
+  # add a new estimate
   register_estimate
   erb :index, :locals => {:estimates => estimates}
 end
 
 post "/complete" do
+  # complete an existing task, and 
   register_completion
   erb :index, :locals => {:estimates => estimates}
   # post a completion to the database
@@ -61,6 +69,7 @@ def register_estimate(user, client, day, time, estimate)
 
   Task.create({
     :user => user,
+    :type => type,
     :day => day,
     :time_of_day => time_of_day,
     :client => client,

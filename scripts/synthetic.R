@@ -79,9 +79,19 @@ tasks <- data.frame(
     max(1, if (t == "short") round(rnorm(1, 8, 4)) else round(rnorm(1, 96, 16)))})
 )
 
+tasks <- cbind(tasks, user_class = sapply(1:(dim(tasks)[1]), function (i) {
+  t <- tasks[i, "class"]
+  u <- users[tasks[i, "user"]]
+  misclassify <- misclassify * (if ('misclassify' %in% u) u['misclassify'] else 1)
+  if (runif(1) < misclassify) {
+    t <- (if (t == "short") "long" else "short")
+  }
+  t
+}))
+
 tasks <- cbind(tasks, user_estimate = sapply(1:(dim(tasks)[1]), function (i) {
-  t <- tasks[i,"class"]
-  u <- users[tasks[i,"user"]]
+  t <- tasks[i, "class"]
+  u <- users[tasks[i, "user"]]
   time <- tasks[i, "time_of_day"]
 
   # misclassification rate

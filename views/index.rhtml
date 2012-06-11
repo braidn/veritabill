@@ -16,6 +16,7 @@
             <thead>
               <tr>
                 <th>Task #</th>
+                <th>Type</th>
                 <th>User</th>
                 <th>Client</th>
                 <th>Day</th>
@@ -29,6 +30,7 @@
               <% estimates.to_a.reverse.each do |e| %>
                 <tr>
                   <td><%= e['id'] %></td>
+                  <td><%= e['type'].capitalize %></td>
                   <td><%= e['user'] %></td>
                   <td><%= e['client'] %></td>
                   <td><%= e['day'] %></td>
@@ -41,6 +43,11 @@
               <% end %>
               <tr>
                 <td><span style="color: #cccccc">new</span></td>
+                <td><select id="type" style="width: 100px">
+                  <% types.each do |t| %>
+                    <option><%= t %></option>
+                  <% end %>
+                </select></td>
                 <td><select id="user" style="width: 100px">
                   <% users.each do |u| %>
                     <option><%= u %></option>

@@ -13,6 +13,7 @@ DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 class Task
   include DataMapper::Resource
   property :id, Serial
+  property :type, String
   property :user, String
   property :day, String
   property :time_of_day, String
@@ -27,6 +28,7 @@ DataMapper.auto_migrate!
 # We include the user's estimate as a conditioning datum, so Veritable can learn (and correct for) individual user biases
 schema = Veritable::Schema.new({
   'user' => {'type' => 'categorical'},
+  'type' => {'type'} => 'categorical'},
   'day' => {'type' => 'categorical'},
   'time_of_day' => {'type' => 'categorical'},
   'client' => {'type' => 'categorical'},
@@ -43,6 +45,7 @@ t = api.create_table('veritabill')
 records.each {|r|
   Task.create({ # add to postgres
     :user => r['user'],
+    :type => r['type'],
     :day => r['day'],
     :time_of_day => r['time_of_day'],
     :client => r['client'],
