@@ -12,7 +12,7 @@ DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 class Task
   include DataMapper::Resource
   property :id, Serial
-  property :type, String
+  property :user_class, String
   property :user, String
   property :day, String
   property :time_of_day, String
@@ -38,7 +38,7 @@ get "/" do
 
   erb :index, :locals => {
     :estimates => estimates,
-    :types => ['Short, Long'],
+    :user_classes => ['Short, Long'],
     :users => ['Yvette', 'Tom', 'Jim', 'Cindy', 'Evelyn'],
     :clients => ['Cyberdyne Systems', 'OCP Inc', 'Mooby\'s Family Restaurants', 'Weyland-Yutani'],
     :days => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
@@ -69,7 +69,7 @@ def register_estimate(user, client, day, time, estimate)
 
   Task.create({
     :user => user,
-    :type => type,
+    :user_class => user_class,
     :day => day,
     :time_of_day => time_of_day,
     :client => client,

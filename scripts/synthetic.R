@@ -84,9 +84,10 @@ tasks <- cbind(tasks, user_class = sapply(1:(dim(tasks)[1]), function (i) {
   u <- users[tasks[i, "user"]]
   misclassify <- misclassify * (if ('misclassify' %in% u) u['misclassify'] else 1)
   if (runif(1) < misclassify) {
-    t <- (if (t == "short") "long" else "short")
+    if (t == "short") "long" else "short"
+  } else {
+    as.character(t)
   }
-  t
 }))
 
 tasks <- cbind(tasks, user_estimate = sapply(1:(dim(tasks)[1]), function (i) {
