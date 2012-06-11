@@ -32,9 +32,9 @@
                   <td><%= e['client'] %></td>
                   <td><%= e['day'] %></td>
                   <td><%= e['time_of_day'] %></td>
-                  <td><%= e['estimate'] %></td>
-                  <td><%= e['predicted'] %></td>
-                  <td><%= e['true_time'] %></td>
+                  <td><%= e['estimate'] / 2 %> hr</td>
+                  <td><%= e['predicted'] / 2 %> hr</td>
+                  <td><%= e['true_time'] / 2 %> hr</td>
                   <td><span style="color:<%= (e['true_time'] > e['estimate']) ? '#cc0000' : '#00cc00' %>; font-size: 80%;">(<%= (e['true_time'] > e['estimate']) ? "+#{e['true_time'] - e['estimate']}" : "-#{(e['true_time'] - e['estimate']).abs}" %>)</span></td>
                 </tr>
               <% end %>
