@@ -24,11 +24,7 @@ TABLE = API.table 'veritabill'
 disable :logging
 set :root, File.dirname(__FILE__) + "/../"
 
-get "/" do
-  # ee = estimates
-  # ee.each {|e|
-  #   e['predicted'] = most_recent_analysis_succeeded.predict
-  # }
+get "/?n?" do
   # render the app page
   # show a table of past estimates and completions
   # show the most recent estimates, with Veritable estimates and a "complete" button
@@ -46,9 +42,6 @@ end
 post "/estimate" do
   register_estimate
   erb :index, :locals => {:estimates => estimates}
-  # post a new estimate to the database
-  # make a prediction
-  # show the prediction
 end
 
 post "/complete" do
@@ -57,6 +50,21 @@ post "/complete" do
   # post a completion to the database
   # update the Veritable table
   # rerun analysis
+end
+
+def estimates(params = nil)
+  params.nil? ? Task.last(10) : Task.last(params['n'])
+end
+
+def register_estimate(user, client, day, time, estimate)
+
+  Task.create({
+    :user => user,
+    :day => day,
+    :time_of_day => time_of_day,
+    :client => client,
+    :estimate => estimate
+  })
   if most_recent_analysis_created._id == most_recent_analysis_succeeded._id
   else
     n = most_recent_analysis_created._id.split('_')[1].to_i + 1
@@ -65,14 +73,12 @@ post "/complete" do
   end
 end
 
-def estimates(params = nil)
-  params.nil? ? Task.last(10) : Task.last(params['n'])
-end
+def register_completion(id, true_time)
+  Task.update({
+    :id => id,
+    :true_time => true_time
+  })
 
-def register_estimate
-end
-
-def register_completion
 end
 
 def connect_to_veritable
