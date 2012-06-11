@@ -38,7 +38,7 @@ get "/" do
 
   erb :index, :locals => {
     :estimates => estimates,
-    :user_classes => ['Short, Long'],
+    :user_classes => ['Short', 'Long'],
     :users => ['Yvette', 'Tom', 'Jim', 'Cindy', 'Evelyn'],
     :clients => ['Cyberdyne Systems', 'OCP Inc', 'Mooby\'s Family Restaurants', 'Weyland-Yutani'],
     :days => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
@@ -48,7 +48,7 @@ end
 
 post "/estimate" do
   # add a new estimate
-  register_estimate
+  register_estimate(params)
   erb :index, :locals => {:estimates => estimates}
 end
 
@@ -65,33 +65,38 @@ def estimates(params = nil)
   params.nil? ? Task.last(10) : Task.last(params['n'])
 end
 
-def register_estimate(user, client, day, time, estimate)
-
+def register_estimate(params)
+  a = most_recent_analysis_succeeded
+  veritable_estimate = a.predict({
+    'user' => params[:user],
+    'user_class' => params[:user_class],
+    'day' => params[:day],
+    'time_of_day' => params[:time_of_day],
+    'client' => params[:client],
+    'user_estimate' => params[:user_estimate],
+    'true_time' => nil
+    })['true_time']
   Task.create({
-    :user => user,
-    :user_class => user_class,
-    :day => day,
-    :time_of_day => time_of_day,
-    :client => client,
-    :estimate => estimate
+    :user => params[:user],
+    :user_class => params[:user_class],
+    :day => params[:day],
+    :time_of_day => params[:time_of_day],
+    :client => params[:client],
+    :user_estimate => params[:user_estimate],
+    :veritable_estimate => veritable_estimate
   })
-  if most_recent_analysis_created._id == most_recent_analysis_succeeded._id
-  else
-    n = most_recent_analysis_created._id.split('_')[1].to_i + 1
-    most_recent_analysis_created.delete
-    TABLE.most_recent_analysis_succeeded(schema, 'veritabill_#{n}')
-  end
 end
 
 def register_completion(id, true_time)
+  t = Task.get(id)
   Task.update({
-    :id => id,
     :true_time => true_time
   })
-
-end
-
-def connect_to_veritable
+  n = most_recent_analysis_created._id.split('_')[1].to_i + 1
+  if most_recent_analysis_created._id != most_recent_analysis_succeeded._id
+    most_recent_analysis_created.delete
+  end
+    TABLE.create_analysis(schema, 'veritabill_#{n}')
 end
 
 def most_recent_analysis_created
