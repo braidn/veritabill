@@ -24,7 +24,7 @@ TABLE = API.table 'veritabill'
 disable :logging
 set :root, File.dirname(__FILE__) + "/../"
 
-get "/?n?" do
+get "/" do
   # render the app page
   # show a table of past estimates and completions
   # show the most recent estimates, with Veritable estimates and a "complete" button
