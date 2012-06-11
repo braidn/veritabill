@@ -30,6 +30,7 @@ get "/" do
   # show the most recent estimates, with Veritable estimates and a "complete" button
   # show the form to enter a new estimate
 
+  print estimates
   erb :index, :locals => {
     :estimates => estimates,
     :users => ['Yvette', 'Tom', 'Jim', 'Cindy', 'Evelyn'],
