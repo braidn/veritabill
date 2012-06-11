@@ -55,11 +55,16 @@ records.each {|r|
 a = t.create_analysis(schema, 'veritabill_0')
 a.wait
 
-# Task.all.each {|r|
-#   r.update({'true_time' => nil})
-#   veritable_estimate = a.predict(r)
-#   Task.update({
-#     :id => r['id'],
-#     :veritable_estimate => veritable_estimate['true_time']  
-#   })
-# }
+Task.all.each {|r|
+  h = r.attributes
+  h.update({:true_time => nil})
+  h.delete(:veritable_estimate)
+  h.delete(:id)
+  kk, vv = h.collect {|k, v| k.to_s}, h.collect {|k, v| v}
+  h = {}
+  (0...(kk.size)).each {|i| h[kk[i]] = vv[i]}
+  veritable_estimate = a.predict(h)
+  r.update({
+    :veritable_estimate => veritable_estimate['true_time']  
+    })
+}
