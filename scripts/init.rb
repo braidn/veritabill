@@ -28,7 +28,7 @@ DataMapper.auto_migrate!
 # We include the user's estimate as a conditioning datum, so Veritable can learn (and correct for) individual user biases
 schema = Veritable::Schema.new({
   'user' => {'type' => 'categorical'},
-  'type' => {'type'} => 'categorical'},
+  'type' => {'type' => 'categorical'},
   'day' => {'type' => 'categorical'},
   'time_of_day' => {'type' => 'categorical'},
   'client' => {'type' => 'categorical'},
