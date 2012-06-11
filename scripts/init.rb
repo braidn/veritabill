@@ -47,7 +47,7 @@ records.each {|r|
     :time_of_day => r['time_of_day'],
     :client => r['client'],
     :true_time => r['true_time'],
-    :estimate => r['estimate']
+    :user_estimate => r['user_estimate']
   })
   t.upload_row(r) # upload to veritable
 }
@@ -56,7 +56,6 @@ a = t.create_analysis(schema, 'veritabill_0')
 a.wait
 
 # Task.all.each {|r|
-  
 #   r.update({'true_time' => nil})
 #   veritable_estimate = a.predict(r)
 #   Task.update({
