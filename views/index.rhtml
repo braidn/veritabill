@@ -35,7 +35,7 @@
                   <td><%= e['estimate'] / 2 %> hr</td>
                   <td><%= e['predicted'] ? e['predicted'] / 2 : "" %> hr</td>
                   <td><%= e['true_time'] / 2 %> hr</td>
-                  <td><span style="color:<%= (e['true_time'] > e['estimate']) ? '#cc0000' : '#00cc00' %>; font-size: 80%;">(<%= (e['true_time'] > e['estimate']) ? "+#{e['true_time'] - e['estimate'] / 2}" : (e['true_time'] > e['estimate'] ? "-#{(e['true_time'] - e['estimate']).abs / 2}" : "0" %>)</span></td>
+                  <td><span style="color:<%= (e['true_time'] > e['estimate']) ? '#cc0000' : '#00cc00' %>; font-size: 80%;">(<%= (e['true_time'] > e['estimate']) ? "+#{e['true_time'] - e['estimate'] / 2}" : (e['true_time'] > e['estimate'] ? "-#{(e['true_time'] - e['estimate']).abs / 2}" : "0") %>)</span></td>
                 </tr>
               <% end %>
             </tbody>
