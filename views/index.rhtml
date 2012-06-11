@@ -25,7 +25,7 @@
               </tr>
             </thead>
             <tbody>
-              <% estimates.reverse.each do |e| %>
+              <% estimates.to_a.reverse.each do |e| %>
                 <tr>
                   <td><%= e['id'] %></td>
                   <td><%= e['user'] %></td>
