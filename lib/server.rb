@@ -57,7 +57,7 @@ end
 post "/estimate" do
   foo = ""
   params.each {|x| foo = foo + " " + x.to_s}
-  foo = foo + params.class
+  foo = foo + params.class.to_s
   foo
 
   # puts "hello"
