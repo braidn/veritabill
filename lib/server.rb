@@ -65,8 +65,8 @@ post "/complete/:id" do
   redirect "/"
 end
 
-def estimates(params = nil)
-  params.nil? ? Task.last(10) : Task.last(params['n'])
+def estimates
+  Task.all(:id.gt => 990, :id.lt => 1000) + Task.last(2)
 end
 
 # does some basic form validation, uses the most recent Veritable analysis completed to make a prediction for the time the task will actually take, and adds the new task and estimates to the database
