@@ -47,18 +47,19 @@ get "/" do
 end
 
 post "/estimate" do
+  params
   # add a new estimate
-  register_estimate(params)
-  erb :index, :locals => {:estimates => estimates}
+  # register_estimate(params)
+  # redirect "/"
 end
 
 post "/complete" do
   # complete an existing task, and 
-  register_completion
-  erb :index, :locals => {:estimates => estimates}
   # post a completion to the database
   # update the Veritable table
   # rerun analysis
+  register_completion
+  redirect "/"
 end
 
 def estimates(params = nil)
@@ -66,7 +67,7 @@ def estimates(params = nil)
 end
 
 def register_estimate(params)
-  if params.all? {|x| x}
+  if params.all? {|x| x} and params['user_estimate'].is_a? Integer
     a = most_recent_analysis_succeeded
     veritable_estimate = a.predict({
       'user' => params[:user],
