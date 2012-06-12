@@ -42,46 +42,45 @@
                 </tr>
               <% end %>
               <tr>
+              <form id="new_task_form" method="post" action="/estimate"><fieldset>
                 <td><span style="color: #cccccc">new</span></td>
-                <td><select id="user_class" style="width: 100px">
+                <td><select name="user_class" style="width: 100px">
                   <% user_classes.each do |t| %>
                     <option><%= t %></option>
                   <% end %>
                 </select></td>
-                <td><select id="user" style="width: 100px">
+                <td><select name="user" style="width: 100px">
                   <% users.each do |u| %>
                     <option><%= u %></option>
                   <% end %>
                 </select></td>
-                <td><select id="client" style="width: 180px">
+                <td><select name="client" style="width: 180px">
                   <% clients.each do |c| %>
                     <option><%= c %></option>
                   <% end %>
                 </select></td>
-                <td><select id="day"  style="width: 100px">
+                <td><select name="day"  style="width: 100px">
                   <% days.each do |d| %>
                     <option><%= d %></option>
                   <% end %>
                 </select></td>
-                <td><select id="time" style="width: 100px">
+                <td><select name="time" style="width: 100px">
                   <% times.each do |t| %>
                     <option><%= t %></option>
                   <% end %>
                 </select></td>
-                <form id="new_task_form" method="post" action="/estimate">
                 <td>
-                  <input type="number" class="input-small" id="user_estimate"></input>
+                  <input type="number" class="input-small" name="user_estimate" />
                 </td>
                 <td>
-
                 </td>
                 <td>
-                  <button class='btn btn-primary' id="new_estimate">Submit</button>
+                  <button class='btn btn-primary' name="new_estimate">Submit</button>
                 </td>
-                </form>
                 <td>
                   <!-- performant? -->
-                </td>
+                </td></fieldset>
+              </form>
               </tr>
             </tbody>
           </table>
@@ -89,20 +88,5 @@
       </div>
     </div>
     <script type="text/javascript" src="js/vendor/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
-    <script type="text/javascript">
-      $(function() {
-        $('#new_task_form').validate({
-          rules: {
-            user_estimate: {
-              required: true,
-              number: true,
-              max: 150,
-              min: 0.5
-            }
-          }
-        });
-      });
-    </script>
   </body>
 </html>
