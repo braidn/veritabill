@@ -55,8 +55,15 @@ end
 
 # adds a new estimate
 post "/estimate" do
-  register_estimate(params)
-  redirect "/"
+  foo = ""
+  params.each {|x| foo = foo + " " + x.to_s}
+  foo = foo + params.class
+  foo
+
+  # puts "hello"
+
+  # register_estimate(params)
+  # redirect "/"
 end
 
 post "/complete" do
@@ -76,7 +83,7 @@ end
 def register_estimate(params)
   params.each {|x| puts x.to_s}
   if (params.all? {|x| not x.nil?}) and (params[:user_estimate].is_a? Numeric) and (params[:user_estimate] > 0) # check to make sure that the user's estimate can be coerced into a meaningful estimate and that no form fields are missing
-    puts here
+    puts "here"
     puts params
     a = most_recent_analysis_succeeded
     veritable_estimate = a.predict(stringify_hash_keys(params).update(
