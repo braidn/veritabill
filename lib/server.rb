@@ -90,6 +90,7 @@ def register_completion(id, true_time)
   t.update({
     :true_time => (true_time.to_f * 2).round
   })
+  schema = most_recent_analysis_created.schema
   n = most_recent_analysis_created._id.split('_')[1].to_i + 1
   if most_recent_analysis_created._id != most_recent_analysis_succeeded._id
     most_recent_analysis_created.delete
