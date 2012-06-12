@@ -57,7 +57,7 @@ users <- list(
 # perform tasks for all of the firm's clients.
 days <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
 times <- c("Morning", "Lunchtime", "Afternoon")
-clients <- c("OCP Inc.", "Cyberdyne Systems", "Weyland-Yutani", "Tyrell",
+clients <- c("OCP Inc", "Cyberdyne Systems", "Weyland-Yutani", "Tyrell",
   "Mooby's Family Restaurants")
 
 # We seed the time tracker with 1000 tasks. About 80% of the tasks are short.
