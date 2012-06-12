@@ -86,7 +86,7 @@ end
 
 def register_completion(id, true_time)
   t = Task.get(id)
-  Task.update({
+  t.update({
     :true_time => true_time
   })
   n = most_recent_analysis_created._id.split('_')[1].to_i + 1
