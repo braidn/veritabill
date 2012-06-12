@@ -59,12 +59,9 @@ post "/estimate" do
   redirect "/"
 end
 
-post "/complete" do
-  # complete an existing task, and 
-  # post a completion to the database
-  # update the Veritable table
-  # rerun analysis
-  register_completion
+# marks an existing task complete, updates the database and Veritable, and reruns the analysis
+post "/complete/:id" do
+  register_completion(params[:id], params[:true_time])
   redirect "/"
 end
 
