@@ -99,7 +99,7 @@ def register_completion(id, true_time)
   r['_id'] = r['id'].to_s
   r.delete('id')
   TABLE.upload_row(r)
-  TABLE.create_analysis(schema, 'veritabill_#{n}')
+  TABLE.create_analysis(schema, "veritabill_#{n}")
 end
 
 def stringify_hash_keys(h)
