@@ -79,7 +79,7 @@ def register_estimate(params)
     a = most_recent_analysis_succeeded
     veritable_estimate = a.predict(stringify_hash_keys(params).update(
       'true_time' => nil, # this is what we're predicting
-      'user_estimate' => max(1, round(params[:user_estimate] * 2)) # half-hour increments
+      'user_estimate' => max(1, (params[:user_estimate] * 2).round) # half-hour increments
     ))['true_time']
     Task.create(params.update(:veritable_estimate => veritable_estimate))
   end
