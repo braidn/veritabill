@@ -76,6 +76,7 @@ end
 def register_estimate(params)
   if params.all? {|x| x} and params[:user_estimate].is_a? Numeric and params[:user_estimate] > 0
     a = most_recent_analysis_succeeded
+    params = params_to_hash(params)
     veritable_estimate = a.predict(stringify_hash_keys(params).update(
       'true_time' => nil,
       'user_estimate' => round(params[:user_estimate] * 2) # half-hour increments
@@ -96,6 +97,11 @@ def register_completion(id, true_time)
   TABLE.create_analysis(schema, 'veritabill_#{n}')
 end
 
+def params_to_hash(p)
+  h = {}
+  p.each {|x| h[x[0]] = x[1]}
+  h
+end
 
 def stringify_hash_keys(h)
   j = {}
