@@ -74,14 +74,13 @@ end
 
 # does some basic form validation, uses the most recent Veritable analysis completed to make a prediction for the time the task will actually take, and adds the new task and estimates to the database
 def register_estimate(params)
-  if params.all? {|x| x} and params[:user_estimate].is_a? Numeric and params[:user_estimate] > 0
+  if params.all? {|x| x} and params[:user_estimate].is_a? Numeric and params[:user_estimate] > 0 # check to make sure that the user's estimate can be coerced into a meaningful estimate and that no form fields are missing
     a = most_recent_analysis_succeeded
-    params = params_to_hash(params)
     veritable_estimate = a.predict(stringify_hash_keys(params).update(
-      'true_time' => nil,
-      'user_estimate' => round(params[:user_estimate] * 2) # half-hour increments
+      'true_time' => nil, # this is what we're predicting
+      'user_estimate' => max(1, round(params[:user_estimate] * 2)) # half-hour increments
     ))['true_time']
-    Task.create(params)
+    Task.create(params.update('true_time' => veritable_estimate))
   end
 end
 
@@ -91,16 +90,11 @@ def register_completion(id, true_time)
     :true_time => true_time
   })
   n = most_recent_analysis_created._id.split('_')[1].to_i + 1
+  # every time a new task is completed, we run another analysis, which may not be appropriate for production apps with larger datasets 
   if most_recent_analysis_created._id != most_recent_analysis_succeeded._id
     most_recent_analysis_created.delete
   end
   TABLE.create_analysis(schema, 'veritabill_#{n}')
-end
-
-def params_to_hash(p)
-  h = {}
-  p.each {|x| h[x[0]] = x[1]}
-  h
 end
 
 def stringify_hash_keys(h)
