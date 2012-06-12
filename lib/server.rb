@@ -74,10 +74,12 @@ end
 
 # does some basic form validation, uses the most recent Veritable analysis completed to make a prediction for the time the task will actually take, and adds the new task and estimates to the database
 def register_estimate(params)
-  if params.all? {|x| x} and params[:user_estimate].is_a? Integer
+  if params.all? {|x| x} and params[:user_estimate].is_a? Numeric and params[:user_estimate] > 0
     a = most_recent_analysis_succeeded
     veritable_estimate = a.predict(stringify_hash_keys(params).update(
-      'true_time' => nil))['true_time']
+      'true_time' => nil,
+      'user_estimate' => round(params[:user_estimate] * 2)
+    ))['true_time']
     Task.create(params)
   end
 end
