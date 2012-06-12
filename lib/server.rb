@@ -55,15 +55,8 @@ end
 
 # adds a new estimate
 post "/estimate" do
-  foo = ""
-  params.each {|x| foo = foo + " " + x.to_s}
-  foo = foo + params.class.to_s
-  foo
-
-  # puts "hello"
-
-  # register_estimate(params)
-  # redirect "/"
+  register_estimate(params)
+  redirect "/"
 end
 
 post "/complete" do
