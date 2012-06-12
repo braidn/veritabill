@@ -66,25 +66,27 @@ def estimates(params = nil)
 end
 
 def register_estimate(params)
-  a = most_recent_analysis_succeeded
-  veritable_estimate = a.predict({
-    'user' => params[:user],
-    'user_class' => params[:user_class],
-    'day' => params[:day],
-    'time_of_day' => params[:time_of_day],
-    'client' => params[:client],
-    'user_estimate' => params[:user_estimate],
-    'true_time' => nil
-    })['true_time']
-  Task.create({
-    :user => params[:user],
-    :user_class => params[:user_class],
-    :day => params[:day],
-    :time_of_day => params[:time_of_day],
-    :client => params[:client],
-    :user_estimate => params[:user_estimate],
-    :veritable_estimate => veritable_estimate
-  })
+  if params.all? {|x| x}
+    a = most_recent_analysis_succeeded
+    veritable_estimate = a.predict({
+      'user' => params[:user],
+      'user_class' => params[:user_class],
+      'day' => params[:day],
+      'time_of_day' => params[:time_of_day],
+      'client' => params[:client],
+      'user_estimate' => params[:user_estimate],
+      'true_time' => nil
+      })['true_time']
+    Task.create({
+      :user => params[:user],
+      :user_class => params[:user_class],
+      :day => params[:day],
+      :time_of_day => params[:time_of_day],
+      :client => params[:client],
+      :user_estimate => params[:user_estimate],
+      :veritable_estimate => veritable_estimate
+    })
+  end
 end
 
 def register_completion(id, true_time)
