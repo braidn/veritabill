@@ -7,6 +7,7 @@ require 'data_mapper'
 require 'uri'
 require 'veritable'
 
+# database and model setup
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 
 class Task
@@ -24,18 +25,24 @@ end
 
 DataMapper.auto_upgrade!
 
+# connect to Veritable
 API = Veritable.connect
 TABLE = API.table 'veritabill'
 
+def most_recent_analysis_created
+  TABLE.analyses.to_a.max_by {|a| a.created_at}
+end
+
+def most_recent_analysis_succeeded
+  (TABLE.analyses.to_a.select {|a| a.succeeded?}).max_by {|a| a.created_at}
+end
+
+# set up Sinatra app
 disable :logging
 set :root, File.dirname(__FILE__) + "/../"
 
+# main app route: renders a table of past tasks
 get "/" do
-  # render the app page
-  # show a table of past estimates and completions
-  # show the most recent estimates, with Veritable estimates and a "complete" button
-  # show the form to enter a new estimate
-
   erb :index, :locals => {
     :estimates => estimates,
     :user_classes => ['Short', 'Long'],
@@ -46,13 +53,10 @@ get "/" do
   }
 end
 
+# adds a new estimate
 post "/estimate" do
-  foo = ""
-  params.each {|x| foo = foo + " " + x.to_s}
-  foo
-  # add a new estimate
-  # register_estimate(params)
-  # redirect "/"
+  register_estimate(params)
+  redirect "/"
 end
 
 post "/complete" do
@@ -68,27 +72,13 @@ def estimates(params = nil)
   params.nil? ? Task.last(10) : Task.last(params['n'])
 end
 
+# does some basic form validation, uses the most recent Veritable analysis completed to make a prediction for the time the task will actually take, and adds the new task and estimates to the database
 def register_estimate(params)
-  if params.all? {|x| x} and params['user_estimate'].is_a? Integer
+  if params.all? {|x| x} and params[:user_estimate].is_a? Integer
     a = most_recent_analysis_succeeded
-    veritable_estimate = a.predict({
-      'user' => params[:user],
-      'user_class' => params[:user_class],
-      'day' => params[:day],
-      'time_of_day' => params[:time_of_day],
-      'client' => params[:client],
-      'user_estimate' => params[:user_estimate],
-      'true_time' => nil
-      })['true_time']
-    Task.create({
-      :user => params[:user],
-      :user_class => params[:user_class],
-      :day => params[:day],
-      :time_of_day => params[:time_of_day],
-      :client => params[:client],
-      :user_estimate => params[:user_estimate],
-      :veritable_estimate => veritable_estimate
-    })
+    veritable_estimate = a.predict(stringify_hash_keys(params).update(
+      'true_time' => nil))['true_time']
+    Task.create(params)
   end
 end
 
@@ -101,13 +91,12 @@ def register_completion(id, true_time)
   if most_recent_analysis_created._id != most_recent_analysis_succeeded._id
     most_recent_analysis_created.delete
   end
-    TABLE.create_analysis(schema, 'veritabill_#{n}')
+  TABLE.create_analysis(schema, 'veritabill_#{n}')
 end
 
-def most_recent_analysis_created
-  TABLE.analyses.to_a.max_by {|a| a.created_at}
-end
 
-def most_recent_analysis_succeeded
-  (TABLE.analyses.to_a.select {|a| a.succeeded?}).max_by {|a| a.created_at}
+def stringify_hash_keys(h)
+  j = {}
+  h.each {|k, v| j[k.to_s] = v}
+  j
 end
