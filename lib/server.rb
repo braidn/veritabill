@@ -80,7 +80,7 @@ def register_estimate(params)
       'true_time' => nil, # this is what we're predicting
       'user_estimate' => max(1, round(params[:user_estimate] * 2)) # half-hour increments
     ))['true_time']
-    Task.create(params.update('true_time' => veritable_estimate))
+    Task.create(params.update(:veritable_estimate => veritable_estimate))
   end
 end
 
