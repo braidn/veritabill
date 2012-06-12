@@ -39,7 +39,6 @@
                   <td><%= e['veritable_estimate'] ? "#{e['veritable_estimate'] / 2.0} hr": "" %></td>
                   <%= e['true_time'] ? "<td> #{e['true_time'] / 2.0} hr</td>" : "<form method='post' action='/complete/#{e['id']}'><td><input type='number' class='input-small' name='true_time' /></td>" %>
                   <%= e['true_time'] ? ("<td><span style='color:" + "#{(e['true_time'] > e['user_estimate']) ? '#cc0000' : '#00cc00'}; font-size: 80%;'>" + ((e['true_time'] > e['user_estimate']) ? "+#{(e['true_time'] - e['user_estimate']) / 2.0}" : ((e['true_time'] < e['user_estimate']) ? "-#{(e['true_time'] - e['user_estimate']).abs / 2.0}" : "0")) + ")</span></td>") : "<td><button class='btn btn-info'>Complete</button></td></form>" %>
-                  % end
                 </tr>
               <% end %>
               <tr>
