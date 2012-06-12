@@ -47,7 +47,9 @@ get "/" do
 end
 
 post "/estimate" do
-  params
+  foo = ""
+  params.each {|x| foo = foo + " " + x.to_s}
+  foo
   # add a new estimate
   # register_estimate(params)
   # redirect "/"
