@@ -7,7 +7,7 @@
 # This R script generates synthetic data (/scripts/seed_data.csv) with which
 # to seed our application database.
 #
-# We assume that there are two classes of task, "long" and "short". Long tasks
+# We assume that there are two classes of task, "Long" and "Short". Long tasks
 # take an unknown amount of time, but are normally distributed with a mean of
 # 48 work hours and standard deviation of 8 hours. Short tasks take an unknown
 # amount of time, normally distributed with a mean of 4 work hours and
@@ -63,7 +63,7 @@ clients <- c("OCP Inc.", "Cyberdyne Systems", "Weyland-Yutani", "Tyrell",
 # We seed the time tracker with 1000 tasks. About 80% of the tasks are short.
 n <- 1000
 short.tasks <- 0.8
-task.class <- replicate(n, if (runif(1) < short.tasks) "short" else "long")
+task.class <- replicate(n, if (runif(1) < short.tasks) "Short" else "Long")
 
 # We measure tasks in units of 30 minutes; no task takes less than 30 minutes.
 # Users misclassify about 5% of tasks.
@@ -76,7 +76,7 @@ tasks <- data.frame(
   time_of_day = sample(times, n, replace = TRUE), # pick the time of day at random
   client = sample(clients, n, replace = TRUE), # pick the client at random
   true_time = sapply(task.class, function (t) { # true generative process
-    max(1, if (t == "short") round(rnorm(1, 8, 4)) else round(rnorm(1, 96, 16)))})
+    max(1, if (t == "Short") round(rnorm(1, 8, 4)) else round(rnorm(1, 96, 16)))})
 )
 
 tasks <- cbind(tasks, user_class = sapply(1:(dim(tasks)[1]), function (i) {
@@ -84,7 +84,7 @@ tasks <- cbind(tasks, user_class = sapply(1:(dim(tasks)[1]), function (i) {
   u <- users[tasks[i, "user"]]
   misclassify <- misclassify * (if ('misclassify' %in% u) u['misclassify'] else 1)
   if (runif(1) < misclassify) {
-    if (t == "short") "long" else "short"
+    if (t == "Short") "Long" else "Short"
   } else {
     as.character(t)
   }
@@ -98,10 +98,10 @@ tasks <- cbind(tasks, user_estimate = sapply(1:(dim(tasks)[1]), function (i) {
   # misclassification rate
   misclassify <- misclassify * (if ('misclassify' %in% u) u['misclassify'] else 1)
   if (runif(1) < misclassify) {
-    t <- (if (t == "short") "long" else "short")
+    t <- (if (t == "Short") "Long" else "Short")
   }
 
-  params <- if (t == "short") c(8, 4) else c(96, 16)
+  params <- if (t == "Short") c(8, 4) else c(96, 16)
 
   # adjust for user biases
   params <- params * (if ('estimate' %in% u) u['estimate'] else 1)
@@ -111,7 +111,7 @@ tasks <- cbind(tasks, user_estimate = sapply(1:(dim(tasks)[1]), function (i) {
   } else if (time == "afternoon") {
     params <- params * (if ('afternoon.estimate' %in% u) u['afternoon.estimate'] else 1)
   }
-  if (t == "short") {
+  if (t == "Short") {
     params <- params * (if ('short.estimate' %in% u) u['short.estimate'] else 1)
   } else {
     params <- params * (if ('long.estimate' %in% u) u['long.estimate'] else 1)

@@ -78,7 +78,7 @@ def register_estimate(params)
     a = most_recent_analysis_succeeded
     veritable_estimate = a.predict(stringify_hash_keys(params).update(
       'true_time' => nil, # this is what we're predicting
-      'user_class' => params[:user_class].downcase
+      'user_class' => params[:user_class]
     ))['true_time']
     Task.create(params.update(:veritable_estimate => veritable_estimate))
   end
