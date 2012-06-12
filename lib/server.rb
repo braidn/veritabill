@@ -94,7 +94,7 @@ def register_completion(id, true_time)
     most_recent_analysis_created.delete
   end
   r = stringify_hash_keys(t.attributes)
-  r['_id'] = r['id']
+  r['_id'] = r['id'].to_s
   r.delete('id')
   TABLE.upload_row(r)
   TABLE.create_analysis(schema, 'veritabill_#{n}')
