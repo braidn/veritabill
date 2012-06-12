@@ -83,16 +83,20 @@ def register_estimate(params)
   end
 end
 
+# every time a new task is completed, we run another analysis, which may not be appropriate for production apps with larger datasets 
 def register_completion(id, true_time)
   t = Task.get(id)
   t.update({
     :true_time => true_time
   })
   n = most_recent_analysis_created._id.split('_')[1].to_i + 1
-  # every time a new task is completed, we run another analysis, which may not be appropriate for production apps with larger datasets 
   if most_recent_analysis_created._id != most_recent_analysis_succeeded._id
     most_recent_analysis_created.delete
   end
+  r = stringify_hash_keys(t.attributes)
+  r['_id'] = r['id']
+  r.delete('id')
+  TABLE.upload_row(r)
   TABLE.create_analysis(schema, 'veritabill_#{n}')
 end
 
